@@ -23,7 +23,8 @@
     --radius: 10px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; overflow-x:hidden;}
+  body{overflow-x:hidden;}
   body{
     font-family:'Inter',sans-serif;
     background:var(--bg);
@@ -82,11 +83,20 @@
       flex-direction:column; align-items:flex-start; gap:0; max-height:0; overflow:hidden;
       transition:max-height .3s ease; border-bottom:1px solid rgba(242,183,5,0.18);
     }
-    .nav-links.open{max-height:400px;}
+    .nav-links.open{max-height:min(80vh,500px); overflow-y:auto;}
     .nav-links li{width:100%;}
     .nav-links a{display:block; width:100%; padding:14px 6vw;}
+    .nav-links a.active::after{left:0; right:auto; top:0; bottom:0; width:3px; height:auto;}
     .nav-resume{margin:10px 6vw; display:inline-block;}
     .nav-toggle{display:block;}
+  }
+  .nav-scrim{
+    display:none; position:fixed; top:58px; left:0; right:0; bottom:0;
+    background:rgba(5,17,31,0.55); z-index:90;
+  }
+  .nav-scrim.show{display:block;}
+  @media (max-width:600px){
+    .hero-glyphs{display:none;}
   }
 
   section{padding:6rem 6vw;}
@@ -162,6 +172,17 @@
     background:var(--sand); color:var(--navy); border:1px solid rgba(200,137,30,0.35);
     padding:0.32rem 0.75rem; border-radius:6px; font-size:0.85rem; font-weight:500;
   }
+  .tag .tag-x{
+    display:none; margin-left:6px; background:none; border:none; color:#B23A3A;
+    cursor:pointer; font-weight:700; font-size:0.95em; vertical-align:middle; padding:0;
+  }
+  .edit-mode .tag .tag-x{display:inline;}
+  .add-skill-btn{
+    display:none; margin-top:0.6rem; background:transparent; border:1.5px dashed var(--blue);
+    color:var(--blue); font-size:0.8rem; font-weight:600; padding:0.4rem 0.8rem; border-radius:7px; cursor:pointer;
+  }
+  .edit-mode .add-skill-btn{display:inline-block;}
+  .add-skill-btn:hover{background:rgba(31,78,121,0.06);}
 
   .divider-curve{width:100%; height:44px; display:block; margin:1.6rem 0;}
 
@@ -251,7 +272,9 @@
     display:flex; align-items:center; gap:0.9rem; padding:0.9rem 1.1rem;
     background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14);
     border-radius:9px; font-size:0.95rem; transition:background .15s ease;
+    min-width:0;
   }
+  .contact-item > div{min-width:0;}
   .contact-item:hover{background:rgba(255,255,255,0.12);}
   .contact-item .ic{
     width:34px; height:34px; border-radius:7px; background:var(--gold-bright);
@@ -259,7 +282,7 @@
   }
   .contact-item .ic svg{width:17px; height:17px; color:var(--navy);}
   .contact-item .label{font-size:0.72rem; color:#9FB3C8; font-family:'JetBrains Mono',monospace; margin-bottom:2px;}
-  .contact-item .val{color:#fff;}
+  .contact-item .val{color:#fff; overflow-wrap:anywhere; word-break:break-word;}
 
   footer{
     text-align:center; padding:2.2rem 6vw; color:var(--muted); font-size:0.85rem;
@@ -320,6 +343,7 @@
     <li><a href="Rhaghavi_Senthil_Kumar_Resume.pdf" download class="nav-resume" id="navResumeLink">Download Resume</a></li>
   </ul>
 </nav>
+<div class="nav-scrim" id="navScrim"></div>
 
 <!-- ================= HOME ================= -->
 <section class="hero" id="home">
@@ -401,39 +425,45 @@
     <div>
       <div class="skill-block">
         <h4>Programming</h4>
-        <div class="tag-row" data-edit>
+        <div class="tag-row" id="skillsProgramming">
           <span class="tag">Python</span><span class="tag">SQL</span>
         </div>
+        <button class="add-skill-btn" onclick="addSkill('skillsProgramming')">+ Add skill</button>
       </div>
       <div class="skill-block">
         <h4>Web Development</h4>
-        <div class="tag-row" data-edit>
+        <div class="tag-row" id="skillsWeb">
           <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Flask</span>
         </div>
+        <button class="add-skill-btn" onclick="addSkill('skillsWeb')">+ Add skill</button>
       </div>
       <div class="skill-block">
         <h4>Data &amp; Analysis</h4>
-        <div class="tag-row" data-edit>
+        <div class="tag-row" id="skillsData">
           <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span>
         </div>
+        <button class="add-skill-btn" onclick="addSkill('skillsData')">+ Add skill</button>
       </div>
       <div class="skill-block">
         <h4>Tools &amp; Platforms</h4>
-        <div class="tag-row" data-edit>
+        <div class="tag-row" id="skillsTools">
           <span class="tag">Git &amp; GitHub</span><span class="tag">VS Code</span><span class="tag">Jupyter Notebook</span>
         </div>
+        <button class="add-skill-btn" onclick="addSkill('skillsTools')">+ Add skill</button>
       </div>
       <div class="skill-block">
         <h4>Soft Skills</h4>
-        <div class="tag-row" data-edit>
+        <div class="tag-row" id="skillsSoft">
           <span class="tag">Communication &amp; Teamwork</span><span class="tag">Problem Solving</span><span class="tag">Time Management</span><span class="tag">Adaptability</span>
         </div>
+        <button class="add-skill-btn" onclick="addSkill('skillsSoft')">+ Add skill</button>
       </div>
       <div class="skill-block">
         <h4>Languages</h4>
-        <div class="tag-row" data-edit>
+        <div class="tag-row" id="skillsLang">
           <span class="tag">Tamil</span><span class="tag">English</span><span class="tag">Hindi</span>
         </div>
+        <button class="add-skill-btn" onclick="addSkill('skillsLang')">+ Add skill</button>
       </div>
     </div>
   </div>
@@ -620,8 +650,16 @@
 
   document.getElementById('navToggle').addEventListener('click', ()=>{
     document.getElementById('navLinks').classList.toggle('open');
+    document.getElementById('navScrim').classList.toggle('show');
   });
-  navLinks.forEach(l=>l.addEventListener('click', ()=>document.getElementById('navLinks').classList.remove('open')));
+  navLinks.forEach(l=>l.addEventListener('click', ()=>{
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('navScrim').classList.remove('show');
+  }));
+  document.getElementById('navScrim').addEventListener('click', ()=>{
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('navScrim').classList.remove('show');
+  });
 
   /* ---------------- Reveal on scroll ---------------- */
   const revealObserver = new IntersectionObserver((entries)=>{
@@ -634,6 +672,8 @@
   /* ---------------- Edit mode ---------------- */
   // Change this password in the code before you publish, to keep editing private to you.
   const EDIT_PASSWORD = "rhaghavi2026";
+  const LIST_IDS = ['extraList','educationList','certList','projectList',
+    'skillsProgramming','skillsWeb','skillsData','skillsTools','skillsSoft','skillsLang'];
 
   const editFab = document.getElementById('editFab');
   const toolbar = document.getElementById('editToolbar');
@@ -643,6 +683,30 @@
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(()=>toast.classList.remove('show'), 1800);
+  }
+
+  function enhanceTags(){
+    document.querySelectorAll('.tag').forEach(t=>{
+      if(!t.querySelector('.tag-x')){
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tag-x';
+        btn.textContent = '\u00d7';
+        btn.onclick = ()=> t.remove();
+        t.appendChild(btn);
+      }
+    });
+  }
+
+  function addSkill(rowId){
+    const text = prompt('Add a skill:');
+    if(!text) return;
+    const row = document.getElementById(rowId);
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = text;
+    row.appendChild(span);
+    enhanceTags();
   }
 
   function setEditable(on){
@@ -686,7 +750,7 @@
       data[el.dataset.key] = el.innerHTML;
     });
     // Save dynamic list containers wholesale so add/remove persists too
-    ['extraList','educationList','certList','projectList'].forEach(id=>{
+    LIST_IDS.forEach(id=>{
       const node = document.getElementById(id);
       if(node) data['__list_'+id] = node.innerHTML;
     });
@@ -711,6 +775,7 @@
 
   // Restore saved edits from this browser, if any
   window.addEventListener('DOMContentLoaded', ()=>{
+    enhanceTags();
     const saved = localStorage.getItem('rhaghavi_portfolio_data');
     if(!saved) return;
     try{
@@ -727,6 +792,7 @@
         document.getElementById('contactResumeLink').setAttribute('href', data['__resumeLink']);
       }
     }catch(e){ console.warn('Could not restore saved edits', e); }
+    enhanceTags();
   });
 
   /* ---------------- Add new cards ---------------- */
