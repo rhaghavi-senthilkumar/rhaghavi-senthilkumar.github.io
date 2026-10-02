@@ -256,7 +256,6 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);color:var(--mute
   </div>
  
   <h3 class="sub-h rv">Certifications</h3>
-  <!-- Certificate links are set in the LINKS list at the bottom of this file -->
   <div class="certs rv">
     <a class="ct" href="https://drive.google.com/file/d/1knXyThAI71FHlMe9SWejMUHRJlibEoB9/view?usp=drive_link" data-link="python" target="_blank" rel="noopener">
       <div class="prev"><svg><use href="#i-award"/></svg></div>
@@ -325,7 +324,7 @@ const logos = {
   tamil:T("த"), english:T("A"), hindi:T("हि",15)
 };
  
-/* ===== SKILLS: edit names here. The logo is picked by the second word ===== */
+/* ===== SKILLS: The logo is picked by the second word ===== */
 const skills = {
   "Programming": [["Python","python"],["SQL","sql"]],
   "Web Development": [["HTML","html"],["CSS","css"],["Flask","flask"]],
@@ -346,11 +345,10 @@ fbox.onclick = e => {
   document.querySelectorAll(".tl").forEach(t => t.hidden = b.dataset.c !== "All" && t.dataset.c !== b.dataset.c);
 };
  
-/* ===== YOUR LINKS: paste a Google Drive / OneDrive share link here, or keep the file names if you upload the PDFs next to this file ===== */
 const LINKS = {
   resume: "Rhaghavi_Senthil_Kumar_Resume.pdf",
-  python: "certificates/python-meta.pdf",
-  micropython: "certificates/micropython-nielit.pdf"
+  python: "https://drive.google.com/file/d/1knXyThAI71FHlMe9SWejMUHRJlibEoB9/view?usp=drive_link",
+  micropython: "https://drive.google.com/file/d/1Wwk4tY7LGtxnOpZgohBfzHmFBAIhfynf/view?usp=sharing"
 };
 document.querySelectorAll("[data-link]").forEach(a => a.href = LINKS[a.dataset.link]);
  
