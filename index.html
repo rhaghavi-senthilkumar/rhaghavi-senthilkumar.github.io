@@ -12,7 +12,7 @@
 :root{
   --bg:#15121a; --panel:#1e1a26; --line:#352f44;
   --text:#f1ecf3; --muted:#a79fb4;
-  --accent:#14B8A6; --rose:#f4a6c0; --sage:#9fd8a8; --sand:#e8c9a8;
+  --accent:#cbc8d2; --code-key:#14B8A6; --rose:#f4a6c0; --sage:#9fd8a8; --sand:#e8c9a8;
   --pad:clamp(20px,5vw,80px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -37,7 +37,7 @@ nav{display:flex;gap:28px;align-items:center}
 nav a{color:var(--muted);font-weight:500;transition:color .2s}
 nav a:hover{color:var(--text)}
 nav .resume{color:#1a1118;background:var(--accent);padding:8px 18px;border-radius:8px;font-weight:600}
-nav .resume:hover{color:#1a1118;background:#ff9f8d}
+nav .resume:hover{color:#1a1118;background:#e8e5ee}
 #menu{display:none;background:none;border:1px solid var(--line);color:var(--text);padding:8px 14px;border-radius:8px;font:inherit;cursor:pointer}
  
 section{padding:clamp(56px,9vw,110px) var(--pad)}
@@ -52,7 +52,7 @@ h2::after{content:"";display:block;width:56px;height:4px;border-radius:2px;backg
 .btn{padding:12px 26px;border-radius:8px;font-weight:600;border:1px solid var(--line);transition:border-color .2s,background .2s}
 .btn:hover{border-color:var(--text)}
 .btn.main{background:var(--accent);color:#1a1118;border-color:var(--accent)}
-.btn.main:hover{background:#ff9f8d}
+.btn.main:hover{background:#e8e5ee}
  
 .about{display:grid;grid-template-columns:2fr 1fr;gap:clamp(28px,5vw,80px)}
 .about p+p{margin-top:18px}
@@ -86,7 +86,7 @@ h2::after{content:"";display:block;width:56px;height:4px;border-radius:2px;backg
 .cb{padding:22px 24px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:.85rem;line-height:1.8;color:#d9d3e0}
 .ch{color:var(--muted);margin-bottom:14px}
 .cr{display:grid;grid-template-columns:84px 1fr;gap:4px 14px;margin-bottom:8px}
-.cr>span:first-child{color:var(--accent)}
+.cr>span:first-child{color:var(--code-key)}
 .cr .t{color:var(--text);font-weight:500}
 .cr .s{color:var(--sage)}
 .cr i{font-style:normal;color:var(--rose);margin-right:6px}
@@ -106,6 +106,8 @@ h2::after{content:"";display:block;width:56px;height:4px;border-radius:2px;backg
 .prev{position:relative;aspect-ratio:4/3;background:#17131e;display:grid;place-items:center;border-bottom:1px solid var(--line)}
 .prev svg{width:54px;height:54px;color:var(--rose)}
 .prev object{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;background:#fff}
+.prev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;background:#fff}
+.prev img:not([src]){display:none}
 .ci{padding:18px 20px 20px}
 .ci h3{font-size:1.2rem}
 .ci p{color:var(--muted);margin:2px 0 14px}
@@ -139,12 +141,12 @@ input,textarea{font:inherit;color:var(--text);background:#120f18;border:1px soli
 input:focus,textarea:focus{outline:none;border-color:var(--accent)}
 textarea{min-height:130px;resize:vertical}
 form button{font:inherit;font-weight:600;background:var(--accent);color:#1a1118;border:0;border-radius:10px;padding:13px;cursor:pointer;transition:background .2s}
-form button:hover{background:#ff9f8d}
+form button:hover{background:#e8e5ee}
 footer{padding:28px var(--pad);border-top:1px solid var(--line);color:var(--muted);text-align:center;font-size:.95rem}
  
 /* ONE THEME: projects, education, certifications and extracurricular share the same panel look */
 .cb,.ct,.tick,.step{background:var(--panel);border:1px solid var(--line);border-radius:14px;transition:border-color .25s}
-.cb:hover,.ct:hover,.tick:hover,.step:hover{border-color:rgba(255,138,117,.55)}
+.cb:hover,.ct:hover,.tick:hover,.step:hover{border-color:rgba(203,200,210,.55)}
 .ct:hover{transform:none}
 .step{padding:22px 26px;margin-bottom:18px}
 .step:last-child{margin-bottom:0}
@@ -152,8 +154,16 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);color:var(--mute
 .step p,.ci p{color:var(--muted)}
 .prev{background:#17131e}
 .prev svg{color:var(--accent)}
-.stub{background:rgba(255,138,117,.08)}
+.stub{background:rgba(203,200,210,.08)}
 .stub span{color:var(--accent)}
+ 
+/* Certifications: clean list */
+.certs{grid-template-columns:1fr;gap:14px;max-width:900px}
+.ct{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 26px}
+.ct h3{font-size:1.3rem}
+.ct p{color:var(--muted);margin:2px 0 0}
+.view{flex:none;font-weight:600;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:8px 20px;transition:background .2s,color .2s}
+.ct:hover .view{background:var(--accent);color:#1a1118}
  
 @media(max-width:800px){
   #menu{display:block}
@@ -256,14 +266,13 @@ footer{padding:28px var(--pad);border-top:1px solid var(--line);color:var(--mute
   </div>
  
   <h3 class="sub-h rv">Certifications</h3>
+  <!-- Certificate links are set in the LINKS list at the bottom of this file -->
   <div class="certs rv">
-    <a class="ct" href="https://drive.google.com/file/d/1knXyThAI71FHlMe9SWejMUHRJlibEoB9/view?usp=drive_link" data-link="python" target="_blank" rel="noopener">
-      <div class="prev"><svg><use href="#i-award"/></svg></div>
-      <div class="ci"><h3>Programming in Python</h3><p>Coursera, by Meta</p><span>View certificate ↗</span></div>
+    <a class="ct" href="#" data-link="python" target="_blank" rel="noopener">
+      <div><h3>Programming in Python</h3><p>Coursera, by Meta</p></div><span class="view">View ↗</span>
     </a>
-    <a class="ct" href="https://drive.google.com/file/d/1Wwk4tY7LGtxnOpZgohBfzHmFBAIhfynf/view?usp=sharing" data-link="micropython" target="_blank" rel="noopener">
-      <div class="prev"><svg><use href="#i-award"/></svg></div>
-      <div class="ci"><h3>Micropython for Beginners</h3><p>NIELIT Calicut</p><span>View certificate ↗</span></div>
+    <a class="ct" href="#" data-link="micropython" target="_blank" rel="noopener">
+      <div><h3>Micropython for Beginners</h3><p>NIELIT Calicut</p></div><span class="view">View ↗</span>
     </a>
   </div>
  
@@ -324,7 +333,7 @@ const logos = {
   tamil:T("த"), english:T("A"), hindi:T("हि",15)
 };
  
-/* ===== SKILLS: The logo is picked by the second word ===== */
+/* ===== SKILLS: edit names here. The logo is picked by the second word ===== */
 const skills = {
   "Programming": [["Python","python"],["SQL","sql"]],
   "Web Development": [["HTML","html"],["CSS","css"],["Flask","flask"]],
@@ -345,12 +354,14 @@ fbox.onclick = e => {
   document.querySelectorAll(".tl").forEach(t => t.hidden = b.dataset.c !== "All" && t.dataset.c !== b.dataset.c);
 };
  
+/* ===== LINKS ===== */
 const LINKS = {
   resume: "https://drive.google.com/file/d/1EiT5povDEnfQHkbglwYQ0-DfMpecr3kv/view?usp=drive_link",
   python: "https://drive.google.com/file/d/1knXyThAI71FHlMe9SWejMUHRJlibEoB9/view?usp=drive_link",
   micropython: "https://drive.google.com/file/d/1Wwk4tY7LGtxnOpZgohBfzHmFBAIhfynf/view?usp=sharing"
 };
 document.querySelectorAll("[data-link]").forEach(a => a.href = LINKS[a.dataset.link]);
+ 
  
 /* Contact form opens the visitor's email app with the message ready to send */
 document.getElementById("msgForm").onsubmit = e => {
